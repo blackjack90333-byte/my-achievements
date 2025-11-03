@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои ачивки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #000000;
+            /* --dark-card: #150050; */
+            --dark-card: #484848;
+            /* --accent: #3F0071; */
+            --accent: #343434;
+            /* --primary: #FB2576; */
+            --primary: #AEEA94;
+            --text-light: #ffffff;
+            --text-dark: #000000;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: var(--dark-card);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px 8px 0 0;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            /* font-weight: 500; */
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .tab:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: var(--text-dark);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(251, 37, 118, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .achievements-container {
+            position: relative;
+            min-height: 600px;
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            background: rgba(21, 0, 80, 0.1);
+        }
+
+        .achievement-card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid var(--dark-card);
+            display: inline-block;
+            position: absolute;
+            cursor: move;
+            transition: all 0.3s ease;
+            z-index: 2;
+            max-width: 500px;
+            min-width: 180px;
+            user-select: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-card.dragging {
+            opacity: 0.9;
+            transform: scale(1.05);
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(251, 37, 118, 0.4);
+            border-color: var(--primary);
+        }
+
+        .achievement-completed {
+            /* background: linear(135deg, var(--primary), #ff6b9d); */
+            background: var(--primary);
+            /* opacity: 10%; */
+            font-weight: 700;
+            color: var(--text-dark);
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(251, 37, 118, 0.2);
+        }
+
+        .achievement-not-completed {
+            background: var(--dark-card);
+            color: var(--text-light);
+            border: 3px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(63, 0, 113, 0.2);
+        }
+
+        .achievement-text {
+            font-size: 14px;
+            /* font-weight: 500; */
+            margin: 0;
+            line-height: 1.5;
+            word-wrap: break-word;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .achievement-id {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            background: var(--primary);
+            color: var(--text-dark);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            border: 3px solid var(--dark-bg);
+            z-index: 3;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 2px 8px rgba(251, 37, 118, 0.3);
+        }
+
+        .connection-line {
+            position: absolute;
+            /* background: linear(90deg, var(--primary), var(--accent)); */
+            background: var(--primary);
+            height: 3px;
+            z-index: 1;
+            pointer-events: none;
+            transform-origin: 0 0;
+            border-radius: 2px;
+            /* box-shadow: 0 2px 8px rgba(251, 37, 118, 0.3); */
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            /* font-weight: 700; */
+            font-size: 2.5em;
+            background: linear(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 15px rgba(251, 37, 118, 0.3);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .reset-btn {
+            background: linear(135deg, var(--accent), var(--dark-card));
+            color: var(--text-light);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            /* font-weight: 600; */
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 4px 15px rgba(63, 0, 113, 0.3);
+        }
+
+        .reset-btn:hover {
+            background: linear(135deg, var(--primary), var(--accent));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 37, 118, 0.4);
+        }
+
+        /* Анимации */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--primary); }
+            50% { box-shadow: 0 0 20px var(--primary); }
+            100% { box-shadow: 0 0 5px var(--primary); }
+        }
+
+        .achievement-completed {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <h1>Мои ачивки</h1>
+    
+    <div class="tabs" id="tabsContainer">
+        <!-- Вкладки будут создаваться автоматически -->
+    </div>
+
+    <div class="controls">
+        <button class="reset-btn" onclick="resetPositions()">Сбросить позиции</button>
+    </div>
+
+    <div id="tabContentsContainer">
+        <!-- Контейнеры для вкладок будут создаваться автоматически -->
+    </div>
+
+    <script>
+        // Универсальная структура данных
+        const achievementsData = [
+            {
+                name: "React",
+                achievements: [
+                    {
+                        id: 1,
+                        text: "Изучил основы React",
+                        completed: true,
+                        connectedTo: [2, 3],
+                        position: { x: 50, y: 50 }
+                    },
+                    {
+                        id: 2,
+                        text: "Освоил хуки (useState, useEffect)",
+                        completed: true,
+                        connectedTo: [4],
+                        position: { x: 300, y: 50 }
+                    },
+                    {
+                        id: 3,
+                        text: "Изучил React Router",
+                        completed: true,
+                        connectedTo: [4],
+                        position: { x: 50, y: 200 }
+                    },
+                    {
+                        id: 4,
+                        text: "Создал SPA приложение",
+                        completed: false,
+                        connectedTo: [5],
+                        position: { x: 300, y: 200 }
+                    },
+                    {
+                        id: 5,
+                        text: "Оптимизировал производительность React",
+                        completed: false,
+                        connectedTo: [],
+                        position: { x: 300, y: 350 }
+                    }
+                ]
+            },
+            {
+                name: "Спорт", 
+                achievements: [
+                    {
+                        id: 1,
+                        text: "Начать регулярные тренировки",
+                        completed: true,
+                        connectedTo: [2, 3],
+                        position: { x: 50, y: 50 }
+                    },
+                    {
+                        id: 2,
+                        text: "Пожать 100кг на 6 раз",
+                        completed: false,
+                        connectedTo: [4],
+                        position: { x: 300, y: 50 }
+                    },
+                    {
+                        id: 3,
+                        text: "Пробежать 1 км без остановки",
+                        completed: true,
+                        connectedTo: [5],
+                        position: { x: 50, y: 200 }
+                    },
+                    {
+                        id: 4,
+                        text: "Пожать 120кг на 1 раз",
+                        completed: false,
+                        connectedTo: [],
+                        position: { x: 300, y: 200 }
+                    },
+                    {
+                        id: 5,
+                        text: "Пробежать 5 км",
+                        completed: false,
+                        connectedTo: [],
+                        position: { x: 50, y: 350 }
+                    }
+                ]
+            },
+            {
+                name: "Бизнес",
+                achievements: [
+                    {
+                        id: 1,
+                        text: "Изучить рынок строительства бань",
+                        completed: true,
+                        connectedTo: [2, 3],
+                        position: { x: 50, y: 50 }
+                    },
+                    {
+                        id: 2,
+                        text: "Найти поставщиков материалов",
+                        completed: true,
+                        connectedTo: [4],
+                        position: { x: 300, y: 50 }
+                    },
+                    {
+                        id: 3,
+                        text: "Нанять бригаду строителей",
+                        completed: false,
+                        connectedTo: [4],
+                        position: { x: 50, y: 200 }
+                    },
+                    {
+                        id: 4,
+                        text: "Запустить рекламную кампанию",
+                        completed: false,
+                        connectedTo: [5],
+                        position: { x: 300, y: 200 }
+                    },
+                    {
+                        id: 5,
+                        text: "Получить первых 10 клиентов",
+                        completed: false,
+                        connectedTo: [],
+                        position: { x: 300, y: 350 }
+                    }
+                ]
+            }
+        ];
+
+        let currentTabIndex = 0;
+        let isDragging = false;
+        let dragElement = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        // Функция для создания вкладок на основе данных
+        function createTabs() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            const tabContentsContainer = document.getElementById('tabContentsContainer');
+            
+            achievementsData.forEach((tab, index) => {
+                // Создаем кнопку вкладки
+                const tabButton = document.createElement('button');
+                tabButton.className = `tab ${index === 0 ? 'active' : ''}`;
+                tabButton.textContent = tab.name;
+                tabButton.onclick = () => switchTab(index);
+                tabsContainer.appendChild(tabButton);
+                
+                // Создаем контейнер для контента вкладки
+                const tabContent = document.createElement('div');
+                tabContent.className = `tab-content ${index === 0 ? 'active' : ''}`;
+                tabContent.id = `tab-${index}`;
+                
+                const achievementsContainer = document.createElement('div');
+                achievementsContainer.className = 'achievements-container';
+                achievementsContainer.id = `container-${index}`;
+                
+                tabContent.appendChild(achievementsContainer);
+                tabContentsContainer.appendChild(tabContent);
+            });
+        }
+
+        // Функция переключения вкладок
+        function switchTab(tabIndex) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показываем выбранную вкладку
+            document.getElementById(`tab-${tabIndex}`).classList.add('active');
+            document.querySelectorAll('.tab')[tabIndex].classList.add('active');
+            
+            currentTabIndex = tabIndex;
+            renderAchievements();
+        }
+
+        // Функция для отображения ачивок текущей вкладки
+        function renderAchievements() {
+            const container = document.getElementById(`container-${currentTabIndex}`);
+            container.innerHTML = '';
+            
+            const currentTab = achievementsData[currentTabIndex];
+            const achievements = currentTab.achievements;
+            
+            achievements.forEach(achievement => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `achievement-card ${
+                    achievement.completed 
+                    ? 'achievement-completed' 
+                    : 'achievement-not-completed'
+                }`;
+                achievementElement.id = `achievement-${currentTabIndex}-${achievement.id}`;
+                achievementElement.style.left = `${achievement.position.x}px`;
+                achievementElement.style.top = `${achievement.position.y}px`;
+                
+                achievementElement.innerHTML = `
+                    <div class="achievement-id">${achievement.id}</div>
+                    <p class="achievement-text">${achievement.text}</p>
+                `;
+                
+                // Добавляем обработчики для перетаскивания
+                achievementElement.addEventListener('mousedown', startDrag);
+                achievementElement.addEventListener('touchstart', startDrag);
+                
+                container.appendChild(achievementElement);
+            });
+
+            drawConnections();
+        }
+
+        // Функция для начала перетаскивания
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            dragElement = this;
+            dragElement.classList.add('dragging');
+            
+            const rect = dragElement.getBoundingClientRect();
+            if (e.type === 'mousedown') {
+                dragOffset.x = e.clientX - rect.left;
+                dragOffset.y = e.clientY - rect.top;
+            } else if (e.type === 'touchstart') {
+                dragOffset.x = e.touches[0].clientX - rect.left;
+                dragOffset.y = e.touches[0].clientY - rect.top;
+            }
+            
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('touchmove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        // Функция для обработки перетаскивания
+        function onDrag(e) {
+            if (!isDragging || !dragElement) return;
+            
+            e.preventDefault();
+            let clientX, clientY;
+            
+            if (e.type === 'mousemove') {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            } else if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            }
+            
+            const container = document.getElementById(`container-${currentTabIndex}`);
+            const containerRect = container.getBoundingClientRect();
+            
+            const x = clientX - containerRect.left - dragOffset.x;
+            const y = clientY - containerRect.top - dragOffset.y;
+            
+            dragElement.style.left = `${x}px`;
+            dragElement.style.top = `${y}px`;
+            
+            // Обновляем линии в реальном времени
+            drawConnections();
+        }
+
+        // Функция для остановки перетаскивания
+        function stopDrag() {
+            if (!isDragging || !dragElement) return;
+            
+            // Сохраняем новую позицию в данных
+            const achievementId = parseInt(dragElement.id.replace(`achievement-${currentTabIndex}-`, ''));
+            const currentTab = achievementsData[currentTabIndex];
+            const achievement = currentTab.achievements.find(a => a.id === achievementId);
+            
+            if (achievement) {
+                achievement.position.x = parseInt(dragElement.style.left);
+                achievement.position.y = parseInt(dragElement.style.top);
+            }
+            
+            isDragging = false;
+            dragElement.classList.remove('dragging');
+            dragElement = null;
+            
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('touchmove', onDrag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
+        // Функция для рисования линий связей
+        function drawConnections() {
+            const container = document.getElementById(`container-${currentTabIndex}`);
+            // Удаляем старые линии
+            const oldLines = container.querySelectorAll('.connection-line');
+            oldLines.forEach(line => line.remove());
+            
+            const currentTab = achievementsData[currentTabIndex];
+            const achievements = currentTab.achievements;
+            
+            achievements.forEach(achievement => {
+                if (achievement.connectedTo && achievement.connectedTo.length > 0) {
+                    achievement.connectedTo.forEach(targetId => {
+                        const sourceCard = document.getElementById(`achievement-${currentTabIndex}-${achievement.id}`);
+                        const targetCard = document.getElementById(`achievement-${currentTabIndex}-${targetId}`);
+                        
+                        if (sourceCard && targetCard) {
+                            const sourceRect = sourceCard.getBoundingClientRect();
+                            const targetRect = targetCard.getBoundingClientRect();
+                            const containerRect = container.getBoundingClientRect();
+                            
+                            // Вычисляем координаты центров карточек
+                            const sourceX = sourceRect.left + sourceRect.width / 2 - containerRect.left;
+                            const sourceY = sourceRect.top + sourceRect.height / 2 - containerRect.top;
+                            const targetX = targetRect.left + targetRect.width / 2 - containerRect.left;
+                            const targetY = targetRect.top + targetRect.height / 2 - containerRect.top;
+                            
+                            // Вычисляем длину и угол линии
+                            const length = Math.sqrt(Math.pow(targetX - sourceX, 2) + Math.pow(targetY - sourceY, 2));
+                            const angle = Math.atan2(targetY - sourceY, targetX - sourceX) * 180 / Math.PI;
+                            
+                            // Создаём элемент линии
+                            const line = document.createElement('div');
+                            line.className = 'connection-line';
+                            line.style.width = `${length}px`;
+                            line.style.left = `${sourceX}px`;
+                            line.style.top = `${sourceY}px`;
+                            line.style.transform = `rotate(${angle}deg)`;
+                            
+                            container.appendChild(line);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Функция для сброса позиций текущей вкладки
+        function resetPositions() {
+            const currentTab = achievementsData[currentTabIndex];
+            const initialPositions = [
+                { x: 50, y: 50 }, { x: 300, y: 50 }, { x: 50, y: 200 },
+                { x: 300, y: 200 }, { x: 300, y: 350 }
+            ];
+            
+            currentTab.achievements.forEach((achievement, index) => {
+                if (initialPositions[index]) {
+                    achievement.position = { ...initialPositions[index] };
+                }
+            });
+            
+            renderAchievements();
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            createTabs(); // Создаем вкладки на основе данных
+            renderAchievements(); // Рендерим первую вкладку
+        });
+
+        // Обновляем линии при изменении размера окна
+        window.addEventListener('resize', drawConnections);
+    </script>
+</body>
+</html>
