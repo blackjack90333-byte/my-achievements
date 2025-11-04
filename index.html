@@ -1,179 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <script>
-        // Универсальная структура данных
-        const achievementsData = [
-    {
-        name: "Бизнес Квест",
-        achievements: [
-            {
-                id: 1,
-                text: "Сделать сайт РЕМОНТ КВАРТИР",
-                completed: true,
-                connectedTo: [6],
-                position: { x: 50, y: 50 }
-            },
-            {
-                id: 2,
-                text: "Сделать сайт ШТУКАТУРКА",
-                completed: true,
-                connectedTo: [6],
-                position: { x: 250, y: 50 }
-            },
-            {
-                id: 3,
-                text: "Сделать сайт КОНСАЛТИНГ БИЗНЕССА",
-                completed: true,
-                connectedTo: [6],
-                position: { x: 450, y: 50 }
-            },
-            {
-                id: 4,
-                text: "Сделать сайт 4",
-                completed: false,
-                connectedTo: [6],
-                position: { x: 650, y: 50 }
-            },
-            {
-                id: 5,
-                text: "Сделать сайт 5",
-                completed: false,
-                connectedTo: [6],
-                position: { x: 850, y: 50 }
-            },
-            {
-                id: 6,
-                text: "Сделать сайт-портфолио",
-                completed: false,
-                connectedTo: [7],
-                position: { x: 450, y: 200 }
-            },
-            {
-                id: 7,
-                text: "Настроить автопрозвон по картам",
-                completed: false,
-                connectedTo: [8],
-                position: { x: 450, y: 350 }
-            },
-            {
-                id: 8,
-                text: "Получить 1 клиента",
-                completed: false,
-                connectedTo: [9],
-                position: { x: 250, y: 500 }
-            },
-            {
-                id: 9,
-                text: "Получить 1 оплату",
-                completed: false,
-                connectedTo: [],
-                position: { x: 650, y: 500 }
-            }
-        ]
-    },
-    {
-        name: "React",
-        achievements: [
-            {
-                id: 1,
-                text: "Изучил основы React",
-                completed: true,
-                connectedTo: [2, 3],
-                position: { x: 50, y: 50 }
-            },
-            {
-                id: 2,
-                text: "Освоил хуки (useState, useEffect)",
-                completed: true,
-                connectedTo: [4],
-                position: { x: 300, y: 50 }
-            },
-            {
-                id: 3,
-                text: "Изучил React Router",
-                completed: true,
-                connectedTo: [4],
-                position: { x: 50, y: 200 }
-            },
-            {
-                id: 4,
-                text: "Создал SPA приложение",
-                completed: false,
-                connectedTo: [5],
-                position: { x: 300, y: 200 }
-            },
-            {
-                id: 5,
-                text: "Оптимизировал производительность React",
-                completed: false,
-                connectedTo: [],
-                position: { x: 300, y: 350 }
-            }
-        ]
-    },
-    {
-        name: "Спорт", 
-        achievements: [
-            {
-                id: 1,
-                text: "Начать регулярные тренировки",
-                completed: true,
-                connectedTo: [2, 3],
-                position: { x: 50, y: 50 }
-            },
-            {
-                id: 2,
-                text: "Пожать 100кг на 6 раз",
-                completed: false,
-                connectedTo: [4],
-                position: { x: 300, y: 50 }
-            },
-            {
-                id: 3,
-                text: "Пробежать 1 км без остановки",
-                completed: true,
-                connectedTo: [5],
-                position: { x: 50, y: 200 }
-            },
-            {
-                id: 4,
-                text: "Пожать 120кг на 1 раз",
-                completed: false,
-                connectedTo: [],
-                position: { x: 300, y: 200 }
-            },
-            {
-                id: 5,
-                text: "Пробежать 5 км",
-                completed: false,
-                connectedTo: [],
-                position: { x: 50, y: 350 }
-            }
-        ]
-    }
-];
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мои ачивки</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --dark-bg: #000000;
-            /* --dark-card: #150050; */
-            --dark-card: #484848;
-            /* --accent: #3F0071; */
-            --accent: #343434;
-            /* --primary: #FB2576; */
-            --primary: #B6F500;
-            --text-light: #ffffff;
-            --text-dark: #000000;
-        }
-
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
+            background-color: #000000;
+            color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             padding: 20px;
             max-width: 1200px;
@@ -185,35 +20,34 @@
         .tabs {
             display: flex;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 2px solid #343434;
             flex-wrap: wrap;
         }
 
         .tab {
             padding: 12px 24px;
-            background: var(--dark-card);
-            color: var(--text-light);
+            background: #484848;
+            color: #ffffff;
             border: none;
             border-radius: 8px 8px 0 0;
             margin-right: 5px;
             cursor: pointer;
             font-size: 14px;
-            /* font-weight: 500; */
             transition: all 0.3s ease;
             margin-bottom: 5px;
             font-family: 'Montserrat', sans-serif;
         }
 
         .tab:hover {
-            background: var(--accent);
+            background: #343434;
             transform: translateY(-2px);
         }
 
         .tab.active {
-            background: var(--primary);
-            color: var(--text-dark);
+            background: #B6F500;
+            color: #000000;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(251, 37, 118, 0.3);
+            box-shadow: 0 4px 15px rgba(182, 245, 0, 0.3);
         }
 
         .tab-content {
@@ -227,17 +61,17 @@
         .achievements-container {
             position: relative;
             min-height: 600px;
-            border: 2px dashed var(--accent);
+            border: 2px dashed #343434;
             border-radius: 12px;
             padding: 20px;
             margin-top: 30px;
-            background: rgba(21, 0, 80, 0.1);
+            background: rgba(72, 72, 72, 0.1);
         }
 
         .achievement-card {
             padding: 20px;
             border-radius: 12px;
-            border: 3px solid var(--dark-card);
+            border: 3px solid #484848;
             display: inline-block;
             position: absolute;
             cursor: move;
@@ -253,79 +87,59 @@
             opacity: 0.9;
             transform: scale(1.05);
             z-index: 1000;
-            box-shadow: 0 8px 25px rgba(251, 37, 118, 0.4);
-            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(182, 245, 0, 0.4);
+            border-color: #B6F500;
         }
 
         .achievement-completed {
-            /* background: linear(135deg, var(--primary), #ff6b9d); */
-            background: var(--primary);
-            /* opacity: 10%; */
+            background: #B6F500;
             font-weight: 700;
-            color: var(--text-dark);
+            color: #000000;
             border: 3px solid #98CD00;
-            
             box-shadow: 0 4px 5px #98CD00;
         }
 
         .achievement-not-completed {
-            background: var(--dark-card);
-            color: var(--text-light);
-            border: 3px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(63, 0, 113, 0.2);
+            background: #484848;
+            color: #ffffff;
+            border: 3px solid #343434;
+            box-shadow: 0 4px 15px rgba(52, 52, 52, 0.2);
         }
 
         .achievement-text {
             font-size: 14px;
-            /* font-weight: 500; */
             margin: 0;
             line-height: 1.5;
             word-wrap: break-word;
             font-family: 'Montserrat', sans-serif;
         }
 
-        .achievement-id {
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            background: var(--primary);
-            color: var(--text-dark);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            border: 3px solid var(--dark-bg);
-            z-index: 3;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 2px 8px rgba(251, 37, 118, 0.3);
-        }
-
         .connection-line {
             position: absolute;
-            /* background: linear(90deg, var(--primary), var(--accent)); */
-            background: var(--primary);
             height: 3px;
             z-index: 1;
             pointer-events: none;
             transform-origin: 0 0;
             border-radius: 2px;
-            /* box-shadow: 0 2px 8px rgba(251, 37, 118, 0.3); */
+        }
+
+        .connection-completed {
+            background: #B6F500;
+        }
+
+        .connection-not-completed {
+            background: #666666;
         }
 
         h1 {
             text-align: center;
-            color: var(--text-light);
+            color: #ffffff;
             margin-bottom: 30px;
-            /* font-weight: 700; */
             font-size: 2.5em;
-            background: linear(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, #B6F500, #343434);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 15px rgba(251, 37, 118, 0.3);
+            text-shadow: 0 4px 15px rgba(182, 245, 0, 0.3);
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -335,30 +149,28 @@
         }
 
         .reset-btn {
-            background: linear(135deg, var(--accent), var(--dark-card));
-            color: var(--text-light);
+            background: linear-gradient(135deg, #343434, #484848);
+            color: #ffffff;
             border: none;
             padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            /* font-weight: 600; */
             transition: all 0.3s ease;
             font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 4px 15px rgba(63, 0, 113, 0.3);
+            box-shadow: 0 4px 15px rgba(52, 52, 52, 0.3);
         }
 
         .reset-btn:hover {
-            background: linear(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, #B6F500, #343434);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(251, 37, 118, 0.4);
+            box-shadow: 0 6px 20px rgba(182, 245, 0, 0.4);
         }
 
-        /* Анимации */
         @keyframes glow {
-            0% { box-shadow: 0 0 5px var(--primary); }
-            50% { box-shadow: 0 0 20px var(--primary); }
-            100% { box-shadow: 0 0 5px var(--primary); }
+            0% { box-shadow: 0 0 5px #B6F500; }
+            50% { box-shadow: 0 0 20px #B6F500; }
+            100% { box-shadow: 0 0 5px #B6F500; }
         }
 
         .achievement-completed {
@@ -381,11 +193,10 @@
         <!-- Контейнеры для вкладок будут создаваться автоматически -->
     </div>
 
+    <!-- Подключаем файл с данными -->
+    <script src="achievements.js"></script>
+    
     <script>
-        // Универсальная структура данных
-        
-        
-
         let currentTabIndex = 0;
         let isDragging = false;
         let dragElement = null;
@@ -456,7 +267,6 @@
                 achievementElement.style.top = `${achievement.position.y}px`;
                 
                 achievementElement.innerHTML = `
-                    <div class="achievement-id">${achievement.id}</div>
                     <p class="achievement-text">${achievement.text}</p>
                 `;
                 
@@ -575,9 +385,13 @@
                             const length = Math.sqrt(Math.pow(targetX - sourceX, 2) + Math.pow(targetY - sourceY, 2));
                             const angle = Math.atan2(targetY - sourceY, targetX - sourceX) * 180 / Math.PI;
                             
+                            // Определяем цвет линии в зависимости от статуса ачивки
+                            const isSourceCompleted = achievement.completed;
+                            const lineClass = isSourceCompleted ? 'connection-completed' : 'connection-not-completed';
+                            
                             // Создаём элемент линии
                             const line = document.createElement('div');
-                            line.className = 'connection-line';
+                            line.className = `connection-line ${lineClass}`;
                             line.style.width = `${length}px`;
                             line.style.left = `${sourceX}px`;
                             line.style.top = `${sourceY}px`;
