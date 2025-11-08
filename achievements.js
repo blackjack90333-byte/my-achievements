@@ -25,8 +25,8 @@ const achievementsData = [
             },
             {
                 id: 4,
-                text: "Сделать сайт 4",
-                completed: false,
+                text: "Сделать сайт РЕМОНТ КВАРТИР №2",
+                completed: true,
                 connectedTo: [6],
                 position: { x: 650, y: 50 }
             },
