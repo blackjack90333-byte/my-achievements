@@ -10,11 +10,24 @@
             background-color: #000000;
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0;
+            margin: 0;
             position: relative;
             min-height: 100vh;
+        }
+
+        .header-image {
+            width: 600px;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .content-wrapper {
+            padding: 0 20px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .tabs {
@@ -131,18 +144,6 @@
             background: #666666;
         }
 
-        h1 {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #B6F500, #343434);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 15px rgba(182, 245, 0, 0.3);
-            font-family: 'Montserrat', sans-serif;
-        }
-
         .controls {
             text-align: center;
             margin-bottom: 20px;
@@ -176,21 +177,30 @@
         .achievement-completed {
             animation: glow 2s ease-in-out infinite;
         }
+
+        @media (max-width: 768px) {
+            .header-image {
+                width: 100%;
+                padding: 10px 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Мои ачивки</h1>
+    <img src="label.gif" alt="Мои ачивки" class="header-image">
     
-    <div class="tabs" id="tabsContainer">
-        <!-- Вкладки будут создаваться автоматически -->
-    </div>
+    <div class="content-wrapper">
+        <div class="tabs" id="tabsContainer">
+            <!-- Вкладки будут создаваться автоматически -->
+        </div>
 
-    <div class="controls">
-        <button class="reset-btn" onclick="resetPositions()">Сбросить позиции</button>
-    </div>
+        <div class="controls">
+            <button class="reset-btn" onclick="resetPositions()">Сбросить позиции</button>
+        </div>
 
-    <div id="tabContentsContainer">
-        <!-- Контейнеры для вкладок будут создаваться автоматически -->
+        <div id="tabContentsContainer">
+            <!-- Контейнеры для вкладок будут создаваться автоматически -->
+        </div>
     </div>
 
     <!-- Подключаем файл с данными -->
