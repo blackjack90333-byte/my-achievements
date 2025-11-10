@@ -32,8 +32,8 @@ const achievementsData = [
             },
             {
                 id: 5,
-                text: "Сделать сайт 5",
-                completed: false,
+                text: "Сделать сайт РЕМОНТ СТИРАЛЬНЫХ МАШИН №3",
+                completed: true,
                 connectedTo: [6],
                 position: { x: 850, y: 50 }
             },
